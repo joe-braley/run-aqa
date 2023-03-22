@@ -328,7 +328,7 @@ function installPlatformDependencies() {
             const antContribFile = yield tc.downloadTool(`https://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2/ant-contrib-1.0b2-bin.zip/download`);
             core.info("Setting antcontribFile to: " + antContribFile);
             core.info("Setting tempDirectory to: " + tempDirectory);
-            exec.exec("dir " + antContribFile);
+            exec.exec("ls -la " + antContribFile);
             yield tc.extractZip(`${antContribFile}`, `${tempDirectory}`);
             core.info("Extracted ant-contrib successfully.....");
             yield io.cp(`${tempDirectory}/ant-contrib/lib/ant-contrib.jar`, `${process.env.ANT_HOME}\\lib`);
