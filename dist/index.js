@@ -329,7 +329,10 @@ function installPlatformDependencies() {
             core.info("Setting antcontribFile to: " + antContribFile);
             core.info("Setting tempDirectory to: " + tempDirectory);
             exec.exec("ls -la " + antContribFile);
-            yield tc.extractZip(`${antContribFile}`, `${tempDirectory}`);
+            exec.exec("file *");
+            exec.exec("mv " + antContribFile + " " + "/ant-contrib-1.0b2-bin.zip");
+            exec.exec("file *");
+            yield tc.extractZip("ant-contrib-1.0b2-bin.zip", `${tempDirectory}`);
             core.info("Extracted ant-contrib successfully.....");
             yield io.cp(`${tempDirectory}/ant-contrib/lib/ant-contrib.jar`, `${process.env.ANT_HOME}\\lib`);
         }
