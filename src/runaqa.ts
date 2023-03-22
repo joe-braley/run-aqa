@@ -198,7 +198,10 @@ async function installPlatformDependencies(): Promise<void> {
     core.info("Setting antcontribFile to: " + antContribFile);
     core.info("Setting tempDirectory to: " + tempDirectory);
     exec.exec("ls -la " + antContribFile);
-    await tc.extractZip(`${antContribFile}`, `${tempDirectory}`)
+    exec.exec("file *");
+    exec.exec("mv " + antContribFile + " " + "/ant-contrib-1.0b2-bin.zip");
+    exec.exec("file *");
+    await tc.extractZip("ant-contrib-1.0b2-bin.zip", `${tempDirectory}`)
     core.info("Extracted ant-contrib successfully.....");
 
     await io.cp(
