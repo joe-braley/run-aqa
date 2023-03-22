@@ -194,7 +194,12 @@ async function installPlatformDependencies(): Promise<void> {
     const antContribFile = await tc.downloadTool(
       `https://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2/ant-contrib-1.0b2-bin.zip/download`
     )
+
+    core.info("Setting antcontribFile to: " + antContribFile);
+    core.info("Setting tempDirectory to: " + tempDirectory);
     await tc.extractZip(`${antContribFile}`, `${tempDirectory}`)
+    core.info("Extracted ant-contrib successfully.....");
+
     await io.cp(
       `${tempDirectory}/ant-contrib/lib/ant-contrib.jar`,
       `${process.env.ANT_HOME}\\lib`
@@ -379,6 +384,10 @@ export async function setupParallelEnv(
   aqasystemtestsRepo: string,
   numMachines: string
 ): Promise<void> {
+
+  core.info('Setting up parallel environment....');
+  core.info('Platform: IS_WINDOWS: ' + IS_WINDOWS);
+  core.info(process.platform);
 
   await setupTestEnv(version, jdksource, customizedSdkUrl, sdkdir, buildList, target, aqatestsRepo, openj9Repo, tkgRepo, vendorTestParams, aqasystemtestsRepo);
   process.chdir('TKG');
