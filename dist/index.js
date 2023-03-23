@@ -329,10 +329,10 @@ function installPlatformDependencies() {
             core.info("Setting antcontribFile to: " + antContribFile);
             core.info("Setting tempDirectory to: " + tempDirectory);
             exec.exec("ls -la " + antContribFile);
-            exec.exec("file *");
-            exec.exec("mv " + antContribFile + " " + "/ant-contrib-1.0b2-bin.zip");
-            exec.exec("file *");
-            yield tc.extractZip("ant-contrib-1.0b2-bin.zip", `${tempDirectory}`);
+            exec.exec("ls -la ");
+            exec.exec("pwd");
+            exec.exec("file " + antContribFile);
+            yield tc.extractZip(`${antContribFile}`, `${tempDirectory}`);
             core.info("Extracted ant-contrib successfully.....");
             yield io.cp(`${tempDirectory}/ant-contrib/lib/ant-contrib.jar`, `${process.env.ANT_HOME}\\lib`);
         }
@@ -491,7 +491,8 @@ function setupParallelEnv(version, jdksource, customizedSdkUrl, sdkdir, buildLis
     return __awaiter(this, void 0, void 0, function* () {
         core.info('Setting up parallel environment....');
         core.info('Platform: IS_WINDOWS: ' + IS_WINDOWS);
-        core.info(process.platform);
+        core.info('Process platform is: ' + process.platform);
+        core.info('Process arch is: ' + process.arch);
         yield setupTestEnv(version, jdksource, customizedSdkUrl, sdkdir, buildList, target, aqatestsRepo, openj9Repo, tkgRepo, vendorTestParams, aqasystemtestsRepo);
         process.chdir('TKG');
         process.env.PARALLEL_OPTIONS = `PARALLEL_OPTIONS=TEST=${target} TEST_TIME= NUM_MACHINES=${numMachines}`;
