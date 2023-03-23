@@ -209,7 +209,7 @@ async function installPlatformDependencies(): Promise<void> {
       exec.exec("curl.exe -OLJSks https://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2/ant-contrib-1.0b2-bin.zip/download");
       exec.exec("ls -la");
       exec.exec("file ant-contrib-1.0b2-bin.zip");
-      exec.exec("Expand-Archive -Force ant-contrib-1.0b2-bin.zip " + `${tempDirectory}`);
+      exec.exec("unzip.exe ant-contrib-1.0b2-bin.zip -d " + `${tempDirectory}`);
       exec.exec("rm ant-contrib-1.0b2-bin.zip");
     }
     await io.cp(
