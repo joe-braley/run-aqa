@@ -325,15 +325,23 @@ function installPlatformDependencies() {
                     core.warning('Unexpected error');
                 }
             }
-            const antContribFile = yield tc.downloadTool(`https://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2/ant-contrib-1.0b2-bin.zip/download`);
-            core.info("Setting antcontribFile to: " + antContribFile);
-            core.info("Setting tempDirectory to: " + tempDirectory);
-            exec.exec("ls -la " + antContribFile);
-            exec.exec("ls -la ");
-            exec.exec("pwd");
-            exec.exec("file " + antContribFile);
-            yield tc.extractZip(`${antContribFile}`, `${tempDirectory}`);
-            core.info("Extracted ant-contrib successfully.....");
+            if (process.arch != 'arm64') {
+                const antContribFile = yield tc.downloadTool(`https://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2/ant-contrib-1.0b2-bin.zip/download`);
+                core.info("Setting antcontribFile to: " + antContribFile);
+                core.info("Setting tempDirectory to: " + tempDirectory);
+                exec.exec("ls -la ");
+                exec.exec("pwd");
+                exec.exec("file " + antContribFile);
+                yield tc.extractZip(`${antContribFile}`, `${tempDirectory}`);
+                core.info("Extracted ant-contrib successfully.....");
+            }
+            else {
+                exec.exec("curl.exe -OLJSks https://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2/ant-contrib-1.0b2-bin.zip/download");
+                exec.exec("ls -la");
+                exec.exec("file ant-contrib-1.0b2-bin.zip");
+                exec.exec("Expand-Archive -Force ant-contrib-1.0b2-bin.zip " + `${tempDirectory}`);
+                exec.exec("rm ant-contrib-1.0b2-bin.zip");
+            }
             yield io.cp(`${tempDirectory}/ant-contrib/lib/ant-contrib.jar`, `${process.env.ANT_HOME}\\lib`);
         }
         else if (IS_MACOS) {
