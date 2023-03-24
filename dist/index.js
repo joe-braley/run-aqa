@@ -331,7 +331,7 @@ function installPlatformDependencies() {
             }
             else {
                 exec.exec("ls -la");
-                exec.exec("unzip.exe" + `${antContribFile}` + " -d " + `${tempDirectory}`);
+                exec.exec("unzip.exe " + `${antContribFile}` + " -d " + `${tempDirectory}`);
             }
             yield io.cp(`${tempDirectory}/ant-contrib/lib/ant-contrib.jar`, `${process.env.ANT_HOME}\\lib`);
         }
