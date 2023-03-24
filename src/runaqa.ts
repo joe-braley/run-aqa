@@ -192,25 +192,16 @@ async function installPlatformDependencies(): Promise<void> {
       }
     }
 
-    if (process.arch != 'arm64') {
-      const antContribFile = await tc.downloadTool(
+    const antContribFile = await tc.downloadTool(
         `https://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2/ant-contrib-1.0b2-bin.zip/download`
       )
 
-      core.info("Setting antcontribFile to: " + antContribFile);
-      core.info("Setting tempDirectory to: " + tempDirectory);
-      exec.exec("ls -la ");
-      exec.exec("pwd");
-      exec.exec("file " + antContribFile);
+    if (process.arch != "arm64") {
       await tc.extractZip(`${antContribFile}`, `${tempDirectory}`)
-      core.info("Extracted ant-contrib successfully.....");
     }
     else {
-      exec.exec("curl.exe -OLJSks https://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2/ant-contrib-1.0b2-bin.zip/download");
       exec.exec("ls -la");
-      exec.exec("file ant-contrib-1.0b2-bin.zip");
-      exec.exec("unzip.exe ant-contrib-1.0b2-bin.zip -d " + `${tempDirectory}`);
-      exec.exec("rm ant-contrib-1.0b2-bin.zip");
+      exec.exec("unzip.exe" + `${antContribFile}` + " -d " + `${tempDirectory}`);
     }
     await io.cp(
       `${tempDirectory}/ant-contrib/lib/ant-contrib.jar`,
@@ -298,7 +289,7 @@ async function getAqaTestsRepo(aqatestsRepo: string, version: string, buildList:
   process.chdir('aqa-tests')
   // workaround until TKG can download the artifacts required for Windows
   if (IS_WINDOWS && buildList != '') {
-    if (buildList === 'system'){
+    if (buildList === 'system') {
       process.chdir('system')
       await exec.exec(`git clone -q https://github.com/adoptium/aqa-systemtest.git`)  // points to master
       await exec.exec(`git clone -q https://github.com/adoptium/STF.git`) // points to master
