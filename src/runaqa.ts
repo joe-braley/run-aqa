@@ -201,7 +201,7 @@ async function installPlatformDependencies(): Promise<void> {
     }
     else {
       exec.exec("ls -la");
-      exec.exec("unzip.exe" + `${antContribFile}` + " -d " + `${tempDirectory}`);
+      exec.exec("unzip.exe " + `${antContribFile}` + " -d " + `${tempDirectory}`);
     }
     await io.cp(
       `${tempDirectory}/ant-contrib/lib/ant-contrib.jar`,
