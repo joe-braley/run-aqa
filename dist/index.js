@@ -330,8 +330,8 @@ function installPlatformDependencies() {
                 yield tc.extractZip(`${antContribFile}`, `${tempDirectory}`);
             }
             else {
-                exec.exec("ls -la");
-                exec.exec("unzip.exe " + `${antContribFile}` + " -d " + `${tempDirectory}`);
+                yield exec.exec("unzip.exe " + `${antContribFile}` + " -d " + `${tempDirectory}`);
+                // await unzipWinARM(antContribFile, tempDirectory);
             }
             yield io.cp(`${tempDirectory}/ant-contrib/lib/ant-contrib.jar`, `${process.env.ANT_HOME}\\lib`);
         }
@@ -376,6 +376,9 @@ function installPlatformDependencies() {
         }
     });
 }
+// async function unzipWinARM(antContribFile: string, tempDirectory: string) {
+//   await exec.exec("unzip.exe " + `${antContribFile}` + " -d " + `${tempDirectory}`);
+// }
 /**
  * set required SPEC env variable based on OS type.
  * @return {[null]} null     [description]
