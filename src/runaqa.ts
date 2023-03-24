@@ -200,8 +200,8 @@ async function installPlatformDependencies(): Promise<void> {
       await tc.extractZip(`${antContribFile}`, `${tempDirectory}`)
     }
     else {
-      exec.exec("ls -la");
-      exec.exec("unzip.exe " + `${antContribFile}` + " -d " + `${tempDirectory}`);
+      await exec.exec("unzip.exe " + `${antContribFile}` + " -d " + `${tempDirectory}`);
+      // await unzipWinARM(antContribFile, tempDirectory);
     }
     await io.cp(
       `${tempDirectory}/ant-contrib/lib/ant-contrib.jar`,
@@ -256,6 +256,10 @@ async function installPlatformDependencies(): Promise<void> {
     }
   }
 }
+
+// async function unzipWinARM(antContribFile: string, tempDirectory: string) {
+//   await exec.exec("unzip.exe " + `${antContribFile}` + " -d " + `${tempDirectory}`);
+// }
 
 /**
  * set required SPEC env variable based on OS type.
