@@ -331,7 +331,6 @@ function installPlatformDependencies() {
             }
             else {
                 yield exec.exec("unzip.exe " + `${antContribFile}` + " -d " + `${tempDirectory}`);
-                // await unzipWinARM(antContribFile, tempDirectory);
             }
             yield io.cp(`${tempDirectory}/ant-contrib/lib/ant-contrib.jar`, `${process.env.ANT_HOME}\\lib`);
         }
@@ -564,8 +563,20 @@ function setupTestEnv(version, jdksource, customizedSdkUrl, sdkdir, buildList, t
             // System.dependency has different levels of archive structures archive/systemtest_prereqs/*.*
             // None of io.mv, io.cp and exec.exec can mv directories as expected (mv archive/ ./). Move subfolder systemtest_prereqs instead.
             const dependentPath = yield tc.extractZip(dependents, `${process.env.GITHUB_WORKSPACE}/`);
+            core.info("DependentPath is: " + dependentPath);
+            core.info("GitHub workspace is: " + process.env.GITHUB_WORKSPACE);
             yield io.mv(`${dependentPath}/archive/systemtest_prereqs`, `${process.env.GITHUB_WORKSPACE}/aqa-tests`);
             yield io.rmRF(`${dependentPath}/archive`);
+            // if (process.arch != "arm64") {
+            //   const dependentPath = await tc.extractZip(dependents, `${process.env.GITHUB_WORKSPACE}/`);
+            //   await io.mv(`${dependentPath}/archive/systemtest_prereqs`, `${process.env.GITHUB_WORKSPACE}/aqa-tests`);
+            //   await io.rmRF(`${dependentPath}/archive`);
+            // }
+            // else {
+            //   await exec.exec("unzip", [dependents, "-d", `${process.env.GITHUB_WORKSPACE}/`]);
+            //   await exec.exec("mv", [`${process.env.GITHUB_WORKSPACE}/archive/systemtest_prereqs`, `${process.env.GITHUB_WORKSPACE}/aqa-tests`]);
+            //   await exec.exec("rm -rf", [`${process.env.GITHUB_WORKSPACE}/archive`]));
+            // }
         }
     });
 }
