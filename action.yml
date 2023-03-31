@@ -57,5 +57,5 @@ inputs:
     description: 'Number of machines to run parallel tests'
     required: false
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
