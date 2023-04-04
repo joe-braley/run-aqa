@@ -327,9 +327,11 @@ function installPlatformDependencies() {
             }
             const antContribFile = yield tc.downloadTool(`https://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2/ant-contrib-1.0b2-bin.zip/download`);
             if (process.arch != "arm64") {
+                core.info("Agent is not arm64...agent is :" + process.arch + ", using extractZip");
                 yield tc.extractZip(`${antContribFile}`, `${tempDirectory}`);
             }
             else {
+                core.info("Agent is " + process.arch + ", using unzip");
                 yield exec.exec("unzip.exe " + `${antContribFile}` + " -d " + `${tempDirectory}`);
             }
             yield io.cp(`${tempDirectory}/ant-contrib/lib/ant-contrib.jar`, `${process.env.ANT_HOME}\\lib`);

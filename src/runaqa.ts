@@ -197,9 +197,11 @@ async function installPlatformDependencies(): Promise<void> {
       )
 
     if (process.arch != "arm64") {
+      core.info("Agent is not arm64...agent is :" + process.arch + ", using extractZip");
       await tc.extractZip(`${antContribFile}`, `${tempDirectory}`)
     }
     else {
+      core.info("Agent is " + process.arch + ", using unzip");
       await exec.exec("unzip.exe " + `${antContribFile}` + " -d " + `${tempDirectory}`);
     }
     await io.cp(
