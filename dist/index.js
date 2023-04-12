@@ -414,14 +414,21 @@ function getAqaTestsRepo(aqatestsRepo, version, buildList) {
         if (IS_WINDOWS && buildList != '') {
             if (buildList === 'system') {
                 process.chdir('system');
-                yield exec.exec(`git clone -q https://github.com/adoptium/aqa-systemtest.git`); // points to master
-                yield exec.exec(`git clone -q https://github.com/adoptium/STF.git`); // points to master
+                yield exec.exec(`git clone -q -b v0.9.7 https://github.com/adoptium/aqa-systemtest.git`); // points to master
+                yield exec.exec(`git clone -q -b v0.9.7 https://github.com/adoptium/STF.git`); // points to master
                 process.chdir('../');
             }
             if (buildList === 'openjdk' && version != '') {
                 process.chdir('openjdk');
+                let jdkBranch = '';
                 // Shallow clone the adoptium JDK version - quietly - if there is a reference repo obtain objects from there - destination is openjdk-jdk
-                yield exec.exec(`git clone --depth 1 -q --reference-if-able ${process.env.GITHUB_WORKSPACE}/openjdk_cache https://github.com/adoptium/jdk${version}.git openjdk-jdk`);
+                if (version === "11") {
+                    jdkBranch = "jdk-11.0.19+6";
+                }
+                else {
+                    jdkBranch = "jdk-17.0.7+6";
+                }
+                yield exec.exec(`git clone --depth 1 -q -b ${jdkBranch} --reference-if-able ${process.env.GITHUB_WORKSPACE}/openjdk_cache https://github.com/adoptium/jdk${version}.git openjdk-jdk`);
                 process.chdir('../');
             }
         }
