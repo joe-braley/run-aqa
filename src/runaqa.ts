@@ -290,7 +290,7 @@ async function getAqaTestsRepo(aqatestsRepo: string, version: string, buildList:
     if (buildList === 'openjdk' && version != '') {
       process.chdir('openjdk')
       // Shallow clone the adoptium JDK version - quietly - if there is a reference repo obtain objects from there - destination is openjdk-jdk
-      await exec.exec(`git clone --depth 1 -q --reference-if-able ${process.env.GITHUB_WORKSPACE}/openjdk_cache https://github.com/adoptium/jdk${version}.git openjdk-jdk`)
+      await exec.exec(`git clone --depth 1 -q --reference-if-able ${process.env.GITHUB_WORKSPACE}/openjdk_cache https://github.com/adoptium/jdk${version}u.git openjdk-jdk`)
       process.chdir('../')
     }
   }
