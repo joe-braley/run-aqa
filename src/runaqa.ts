@@ -310,7 +310,7 @@ async function getAqaTestsRepo(aqatestsRepo: string, version: string, buildList:
       else {
         jdkBranch = "jdk-17.0.8+7"
       }
-      await exec.exec(`git clone --depth 1 -q -b ${jdkBranch} --reference-if-able ${process.env.GITHUB_WORKSPACE}/openjdk_cache https://github.com/adoptium/jdk${version}.git openjdk-jdk`)
+      await exec.exec(`git clone --depth 1 -q -b ${jdkBranch} --reference-if-able ${process.env.GITHUB_WORKSPACE}/openjdk_cache https://github.com/adoptium/jdk${version}u.git openjdk-jdk`)
       process.chdir('../')
     }
   }
