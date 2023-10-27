@@ -423,13 +423,13 @@ function getAqaTestsRepo(aqatestsRepo, version, buildList) {
                 let jdkBranch = '';
                 // Shallow clone the adoptium JDK version - quietly - if there is a reference repo obtain objects from there - destination is openjdk-jdk
                 if (version === "11") {
-                    jdkBranch = "jdk-11.0.20+8";
+                    jdkBranch = "jdk-11.0.21+9";
                 }
                 else if (version === "17") {
-                    jdkBranch = "jdk-17.0.8+7";
+                    jdkBranch = "jdk-17.0.9+8";
                 }
                 else {
-                    jdkBranch = "jdk-21+35";
+                    jdkBranch = "jdk-21.0.1+12";
                 }
                 yield exec.exec(`git clone --depth 1 -q -b ${jdkBranch} --reference-if-able ${process.env.GITHUB_WORKSPACE}/openjdk_cache https://github.com/adoptium/jdk${version}u.git openjdk-jdk`);
                 process.chdir('../');
